@@ -66,6 +66,7 @@ firstlast = False  # Include first/last sentence of the artice in its summary (d
 
 watch(credentials, ticks, properties, threshold, hourspast, sentences, firstlast)
 ```
+
 ```text
 This run will take approximately 9 minutes
 Finding news for MSFT
@@ -87,7 +88,8 @@ Finding news for SHAK
 Finding news for VRTX
 Finding news for CMG
 ```
-
+#### Email Example
+<p align="center"><img src="https://raw.githubusercontent.com/anfederico/Stockeye/master/media/NewsAlert.png" width=90%></p>
 
 #### More Properties
 ```text
