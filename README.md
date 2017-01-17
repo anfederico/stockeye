@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/anfederico/Stockeye/master/media/Stockeye.png" width=60%></p>
+<p align="center"><img src="https://raw.githubusercontent.com/anfederico/Stockeye/master/media/Stockeye.png" width=40%></p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![PyPI version](https://badge.fury.io/py/stockeye.svg)](https://badge.fury.io/py/stockeye)
