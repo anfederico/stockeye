@@ -326,7 +326,6 @@ def watch(credentials, ticks, properties = [], threshold = 5, hourspast = 18, se
         if name:
             print "Finding news for %s" % (symbol)
             query = (' '.join([w for w in name.split() if w.lower() not in remove]))+' '+symbol
-            print query
             articles = grabArticles(query+' '+symbol, 2, 20)
             articles = summarizeArticles(articles, sentences, firstlast)  
             articles = sortArticles(articles) 
