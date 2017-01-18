@@ -10,7 +10,7 @@ from math      import log10
 from smtplib              import SMTP
 from email.mime.multipart import MIMEMultipart
 from email.mime.text      import MIMEText
-from nltk                 import sent_tokenize, word_tokenize
+from nltk.tokenize        import sent_tokenize, word_tokenize
 from nltk.corpus          import stopwords
 stopWords = set(stopwords.words('english'))
 
@@ -59,10 +59,10 @@ def buildGraph(text):
         v1.averageScores()
     return vertices
 
-def summarize(text, sentences, firstlast = False):
+def summarize(text, length, firstlast = False):
     vertices = buildGraph(text)
     all_ord = sorted(vertices, key=lambda v: v.order)
-    mos_sig = sorted(vertices, key=lambda v: v.score, reverse=True)[0:sentences]
+    mos_sig = sorted(vertices, key=lambda v: v.score, reverse=True)[0:length]
     mos_sig_ord = sorted(mos_sig, key=lambda v: v.order)
         
     if firstlast:
@@ -73,7 +73,7 @@ def summarize(text, sentences, firstlast = False):
     
     summary = []
     for v in mos_sig_ord:
-        summary.append(v.sentence_raw)
+        summary.append(v.sentence_raw)   
     return summary
 
 # --- Yahoo Methods -----------------------------------------------------------
@@ -235,8 +235,8 @@ def grabArticles(query, pages, rest = 0):
     articles = []
     for url in urls:
         response = get(url, headers=headers)
-        soup = BeautifulSoup(response.text, "html.parser")
-        objects_HId = soup.find_all("a", class_="_HId")
+        soup = BeautifulSoup(response.text, "html.parser") 
+        objects_HId = soup.find_all("a", class_="l._HId")
         objects_sQb = soup.find_all("a", class_="_sQb")
         
         for a in objects_HId:
@@ -264,7 +264,7 @@ def grabArticles(query, pages, rest = 0):
 
 # ----- Analytical Methods -----------------------------------------------------
 
-def summarizeArticles(articles, sentences, firstlast = False):
+def summarizeArticles(articles, length, firstlast = False):
     summedArticles = []
     for a in articles:
         try: 
@@ -277,7 +277,7 @@ def summarizeArticles(articles, sentences, firstlast = False):
                 if len(p) > 100:
                     a.body.append(p)
                     text += p + ' ' 
-            sentences = summarize(text, sentences, firstlast)
+            sentences = summarize(text, length, firstlast)
             for s in sentences:
                 a.summary.append(s) 
             summedArticles.append(a)    
@@ -326,9 +326,10 @@ def watch(credentials, ticks, properties = [], threshold = 5, hourspast = 18, se
         if name:
             print "Finding news for %s" % (symbol)
             query = (' '.join([w for w in name.split() if w.lower() not in remove]))+' '+symbol
-            articles = grabArticles(query+' '+symbol, 2, 20)
-            articles = summarizeArticles(articles, sentences, firstlast)  
+            articles = grabArticles(query, 2, 20)
+            articles = summarizeArticles(articles, sentences, firstlast)
             articles = sortArticles(articles) 
+
             recentArticles = []
             for a in articles:
                 hoursago = float((datetime.now()-a.order).total_seconds())/3600
